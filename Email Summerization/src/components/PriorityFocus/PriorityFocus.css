@@ -1,0 +1,50 @@
+.priority-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.priority-title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--on-surface);
+  margin-bottom: 0.5rem;
+}
+
+.priority-subtitle {
+  font-size: 16px;
+  color: var(--on-surface-variant);
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.view-all-btn:hover {
+  text-decoration: underline;
+}
+
+.arrow-icon {
+  font-size: 14px !important;
+  transition: transform 0.2s;
+}
+
+.view-all-btn:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+.email-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}

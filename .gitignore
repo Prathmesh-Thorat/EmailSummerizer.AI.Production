@@ -1,0 +1,64 @@
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+myenv/
+venv/
+.env/
+
+# =========================
+# FASTAPI / ENV
+# =========================
+.env
+.env.local
+
+# Secret Keys
+credentials.json
+token.json
+
+# SQLite (if used)
+*.db
+
+# =========================
+# NODE / REACT
+# =========================
+node_modules/
+dist/
+build/
+
+# Vite
+.vite/
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# LOG FILES
+# =========================
+*.log
+
+# =========================
+# TEST / CACHE
+# =========================
+.pytest_cache/
+.mypy_cache/
+.cache/
+
+# =========================
+# SUPABASE
+# =========================
+supabase/.temp/

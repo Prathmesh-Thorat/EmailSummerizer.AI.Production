@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts.font-family.css');
+
+/* CSS Variables for Theme */
+:root {
+  --primary: #3525cd;
+  --primary-transparent: rgba(53, 37, 205, 0.1);
+  --primary-hover: rgba(53, 37, 205, 0.05);
+  
+  --background: #f8f9ff;
+  --surface: #f8f9ff;
+  --surface-container-high: #dce9ff;
+  --surface-container-low: #eff4ff;
+  
+  --outline: #777587;
+  --outline-variant: #c7c4d8;
+  
+  --on-surface: #0d1c2e;
+  --on-surface-variant: #464555;
+}
+
+/* Base Styles & Typography */
+.main-container {
+  font-family: 'Geist', sans-serif;
+  color: var(--on-surface);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8rem 16px 6rem 16px; 
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  line-height: 1;
+}
+
+.filled-icon {
+  font-variation-settings: 'FILL' 1;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.hero-title {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  color: var(--on-surface);
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--outline);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+
+/* Toggle Buttons */
+.toggle-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.toggle-btn {
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.toggle-btn:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.02);
+}
+
+.toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.toggle-btn.active {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .decorative-banner {
+    grid-column: span 2;
+  }
+}
+
+/* Action Cards */
+.action-card {
+  background-color: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  .action-card {
+    padding: 2.5rem;
+  }
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px var(--primary-transparent);
+}
+
+.card-top-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--primary);
+}
+
+.card-inner {
+  position: relative;
+  z-index: 10;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrapper .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.primary-bg { background-color: var(--primary-transparent); }
+.secondary-bg { background-color: var(--surface-container-high); }
+.primary-text { color: var(--primary); }
+.secondary-text { color: var(--on-surface-variant); }
+
+/* Badges */
+.badge {
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.primary-badge {
+  background-color: var(--primary-transparent);
+  color: var(--primary);
+  border: 1px solid rgba(53, 37, 205, 0.2);
+}
+
+.secondary-badge {
+  background-color: var(--surface-container-high);
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+/* Card Content Typography */
+.card-title {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  color: var(--on-surface);
+  margin: 0 0 1rem 0;
+}
+
+.card-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--on-surface-variant);
+  margin: 0;
+}
+
+/* Card Footer Action */
+.card-footer {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.primary-footer {
+  color: var(--primary);
+  gap: 0.75rem;
+}
+
+.secondary-footer {
+  color: var(--on-surface-variant);
+  gap: 0.5rem;
+}
+
+.action-card.group:hover .hover-primary-footer {
+  color: var(--primary);
+}
+
+.action-card.group:hover .primary-footer {
+  gap: 1.25rem;
+}
+
+.icon-arrow {
+  font-size: 20px;
+}
+
+/* Card Decorative Glow */
+.card-glow {
+  position: absolute;
+  right: -4rem;
+  bottom: -4rem;
+  width: 16rem;
+  height: 16rem;
+  background-color: rgba(53, 37, 205, 0.05);
+  border-radius: 50%;
+  filter: blur(48px);
+  transition: background-color 0.3s ease;
+  z-index: 0;
+}
+
+.action-card.group:hover .card-glow {
+  background-color: var(--primary-transparent);
+}
+
+/* Decorative Banner */
+.decorative-banner {
+  margin-top: 1rem;
+  border-radius: 1rem;
+  border: 1px dashed var(--outline-variant);
+  height: 12rem;
+  background: linear-gradient(to bottom right, var(--surface-container-low), var(--background));
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.2;
+}
+
+.large-icon {
+  font-size: 60px;
+  color: var(--outline);
+}
