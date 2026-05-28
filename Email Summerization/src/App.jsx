@@ -9,9 +9,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/Dashboard" element={<Dashboard/>}/>
+        <Route path="/Summary" element={<Home />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        <Route path="/" element={<Dashboard/>}/>
         <Route path="/Taskpage" element = {<TasksPage/>}/>
         <Route path="/SummaryHistory" element = {<SummaryHistory/>}/>
           <Route path="/summary/:id"element={<Summaryid />}/>

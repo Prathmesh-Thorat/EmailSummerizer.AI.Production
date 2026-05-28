@@ -56,7 +56,7 @@ const Dashboard = () => {
         
       );
       
-      navigate("/");
+      navigate("/Summary");
 
       const data = await response.json();
       console.log(data);
