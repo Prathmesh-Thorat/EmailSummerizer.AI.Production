@@ -11,11 +11,12 @@ from app.models.user import User
 from app.routes.user import router as user_router
 from app.models.task import Task
 from app.routes.tasks import router as task_router
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 import os;
 
 load_dotenv()
 
-app = FastAPI()
+app = FastAPI(root_path="")
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +33,11 @@ app.add_middleware(
     secret_key=os.getenv("SESSION_SECRET"),
     same_site="none",
     https_only=True
+)
+
+app.add_middleware(
+    TrustedHostMiddleware,
+    allowed_hosts=["*"]
 )
 
 app.include_router(auth_router)
