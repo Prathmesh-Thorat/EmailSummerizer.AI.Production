@@ -5,16 +5,19 @@ import Stats from '../Stats/Stats';
 import DailyOverview from '../DailyOverview/DailyOverview';
 import PriorityFocus from '../PriorityFocus/PriorityFocus';
 import Footer from '../Footer/Footer';
-import './Home.css';
+import './Summaryid.css';
+import { useParams } from "react-router-dom";
 
-function App() {
+
+function Summaryid() {
+  const { id } = useParams();
   const [data, setData] = useState(null);
   const[createdat,setcreatedat] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/summary", { credentials: "include" })
+    fetch(`http://localhost:8000/summary/${id}`, { credentials: "include" })
       .then(res => {
         if (!res.ok) {
           throw new Error(`Server responded with ${res.status}: ${res.statusText}`);
@@ -31,10 +34,8 @@ function App() {
         setError(err.message || "Unable to connect to the server.");
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
-  console.log(data)
-  console.log(createdat)
   if (loading) {
     return (
       <div className="state-screen">
@@ -87,4 +88,4 @@ function App() {
   );
 }
 
-export default App;
+export default Summaryid;

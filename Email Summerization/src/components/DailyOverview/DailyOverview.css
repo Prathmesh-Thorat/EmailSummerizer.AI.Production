@@ -34,14 +34,31 @@
   color: var(--outline);
 }
 
-.overview-icon-container {
-  background-color: var(--primary-fixed);
-  padding: 0.75rem;
-  border-radius: 9999px;
-  display: flex;
+.regen-btn {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--border-radius-lg);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
+.regen-btn:hover {
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  border-color: var(--color-border-primary);
+}
+.regen-btn:active { transform: scale(0.97); }
+.regen-btn .ti {
+  font-size: 15px;
+  transition: transform 0.5s ease;
+}
+.regen-btn:hover .ti { transform: rotate(180deg); }
 
 .overview-icon {
   color: var(--primary);

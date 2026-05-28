@@ -1,18 +1,58 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './DailyOverview.css';
 
-function DailyOverview({daily}) {
+function formatDate(iso) {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  
+  return d.toLocaleString("en-IN", {
+    timeZone:"Asia/Kolkata",
+    day: "2-digit", month: "short", year: "numeric",
+    hour: "2-digit", minute: "2-digit", hour12: true,
+  });
+}
+
+
+function DailyOverview({daily, createdat}) {
+  
+  const [loading, setLoading] = useState(false);
+  const regenerateSummary = async () => {
+
+  try {
+    setLoading(true)
+    await fetch(
+      "http://localhost:8000/regenerate-summary",
+      {
+        method: "POST",
+        credentials: "include"
+      }
+    );
+
+    window.location.reload();
+
+  } catch (err) {
+
+    console.log(err);
+
+  }
+
+  finally{
+    setLoading(false)
+  }
+};
+
   return (
     <section className="overview-section">
       <div className="overview-card">
         <div className="overview-header">
           <div>
             <h2 className="overview-title">Daily Intelligence Overview</h2>
-            <p className="overview-date">Oct 24, 2024 • Synthesis complete</p>
+            <p className="overview-date">{formatDate(createdat)}</p>
           </div>
-          <div className="overview-icon-container">
-            <span className="material-symbols-outlined overview-icon">insights</span>
-          </div>
+          <button className="regen-btn" onClick={regenerateSummary}>
+  <i className="ti ti-refresh" aria-hidden="true" />
+  {loading ? "Generating" : "Regenerate"}
+</button>
         </div>
         <div className="overview-content">
           <p>

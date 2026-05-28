@@ -13,7 +13,17 @@ function Navbar() {
             <a href="#" className="nav-link">About</a>
           </nav>
         </div>
-        <button className="nav-btn">Get Started</button>
+        <button className="nav-btn"  onClick={async () => {
+
+            await fetch(
+              "http://localhost:8000/logout",
+              {
+                credentials: "include"
+              }
+            );
+
+            window.location.reload();
+          }}>Log Out</button>
       </div>
     </header>
   );

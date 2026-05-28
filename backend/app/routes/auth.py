@@ -1,16 +1,20 @@
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi.responses import RedirectResponse
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from fastapi import Depends
 from app.db.dependencies import get_db
 from app.models.summary import Summary
 from app.models.user import User
+from datetime import datetime, timedelta,timezone
 import json
 from app.models.task import Task
 from app.services.gmail_service import (
     get_auth_url,
-    process_callback
+    process_callback,
+    fetch_emails_from_credentials
 )
 
 from app.services.summary_service import generate_summary
@@ -28,19 +32,18 @@ def login():
 
 @router.get("/auth/callback")
 def callback(
-    request : Request,
+    request: Request,
     code: str,
     db: Session = Depends(get_db)
 ):
 
     data = process_callback(code)
-    email_text = data["email_text"]
+
     email = data["email"]
 
     user = db.query(User).filter(
         User.email == email
     ).first()
-
 
     if not user:
 
@@ -54,12 +57,72 @@ def callback(
 
     request.session["user_email"] = user.email
     request.session["user_id"] = user.id
+    request.session["credentials"] = data["credentials"]
 
-    # GET EXISTING TASKS
+    return RedirectResponse("http://localhost:5173/Dashboard")
+
+from pydantic import BaseModel
+
+class SummaryRequest(BaseModel):
+    range: str
+    force_refresh: bool = False
+
+
+@router.post("/generate-summary")
+def generate_summary_route(
+    body: SummaryRequest,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Not logged in"
+        )
+
+    credentials_json = request.session.get("credentials")
+
+    if not credentials_json:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Missing credentials"
+        )
+
+    # RANGE
+    days = 1 if body.range == "today" else 7
+    request.session["summary_range"] = body.range
+
+    two_hours_ago = func.now() - timedelta(hours=2)
+
+    latest_summary = db.query(Summary).filter(
+    Summary.user_id == user_id,
+    Summary.range == body.range,
+    Summary.created_at >= two_hours_ago
+).order_by(
+    Summary.created_at.desc()
+).first()
+
+
+    if latest_summary and not body.force_refresh:
+
+        print("Returning cached summary")
+        return 
+
+    # FETCH EMAILS
+    email_text = fetch_emails_from_credentials(
+        credentials_json,
+        days
+    )
+
+    # EXISTING TASKS
     existing_tasks = db.query(Task).filter(
-        Task.user_id == user.id
+        Task.user_id == user_id
     ).all()
-
 
     existing_task_context = ""
 
@@ -70,42 +133,43 @@ def callback(
         title: {t.title}
         status: {t.status}
         """
-    
-
-    result = generate_summary(email_text,existing_task_context)
-
-    new_summary = Summary(
-        user_id=user.id,
-        overall_summary=result["overall_summary"],
-        data=json.dumps(result)
+   
+    # AI SUMMARY
+    result = generate_summary(
+        email_text,
+        existing_task_context,
+        body.range
     )
 
-    print("Saving summary")
+    # SAVE SUMMARY
+    new_summary = Summary(
+    user_id=user_id,
+    overall_summary=result["overall_summary"],
+    data=json.dumps(result),
+    range=body.range
+    )
 
     db.add(new_summary)
 
-    db.commit()
-
+    # TASK UPDATE
     tasks = result.get("tasks", [])
 
     for task in tasks:
 
         existing_task = db.query(Task).filter(
-        Task.user_id == user.id,
-        Task.task_key == task["task_key"]
+            Task.user_id == user_id,
+            Task.task_key == task["task_key"]
         ).first()
 
-    # UPDATE EXISTING TASK
         if existing_task:
 
             existing_task.title = task["title"]
             existing_task.status = task["status"]
 
-    # CREATE NEW TASK
         else:
 
             new_task = Task(
-                user_id=user.id,
+                user_id=user_id,
                 title=task["title"],
                 type=task["type"],
                 priority=task["priority"],
@@ -117,6 +181,47 @@ def callback(
 
     db.commit()
 
-    print("Saved")
+    return result
 
-    return RedirectResponse("http://localhost:5173/")
+@router.post("/regenerate-summary")
+def regenerate_summary(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+
+        raise HTTPException(
+            status_code=401,
+            detail="Not logged in"
+        )
+
+    summary_range = request.session.get(
+        "summary_range",
+        "today"
+    )
+
+    body = SummaryRequest(
+        range=summary_range,
+        force_refresh=True
+    )
+
+    return generate_summary_route(
+        body=body,
+        request=request,
+        db=db
+    )
+
+@router.get("/emails")
+def getemails(
+    request : Request
+):
+    user_id = request.session.get("user_id")
+    credentials_json = request.session.get("credentials")
+    email_text = fetch_emails_from_credentials(
+        credentials_json,
+        1
+    )
+    return email_text
