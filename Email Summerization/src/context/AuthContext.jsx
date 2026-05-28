@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import.meta.env.VITE_API_URL
 
 const AuthContext = createContext();
 
@@ -10,7 +11,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
 
-    fetch("http://localhost:8000/me", {
+    fetch(`${import.meta.env.VITE_API_URL}/me`, {
       credentials: "include"
     })
       .then((res) => res.json())
