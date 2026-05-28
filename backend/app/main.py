@@ -11,6 +11,7 @@ from app.models.user import User
 from app.routes.user import router as user_router
 from app.models.task import Task
 from app.routes.tasks import router as task_router
+import os;
 
 load_dotenv()
 
@@ -28,7 +29,7 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key="super-secret-key",
+    secret_key=os.getenv("SESSION_SECRET"),
     same_site="none",
     https_only=True
 )
