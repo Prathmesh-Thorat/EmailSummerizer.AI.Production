@@ -7,7 +7,7 @@ import PriorityFocus from '../PriorityFocus/PriorityFocus';
 import Footer from '../Footer/Footer';
 import './Summaryid.css';
 import { useParams } from "react-router-dom";
-
+import.meta.env.VITE_API_URL
 
 function Summaryid() {
   const { id } = useParams();
@@ -17,7 +17,7 @@ function Summaryid() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/summary/${id}`, { credentials: "include" })
+    fetch(`${import.meta.env.VITE_API_URL}/summary/${id}`, { credentials: "include" })
       .then(res => {
         if (!res.ok) {
           throw new Error(`Server responded with ${res.status}: ${res.statusText}`);

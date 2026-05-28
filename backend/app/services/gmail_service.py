@@ -14,7 +14,7 @@ SCOPES = [
 flow = Flow.from_client_secrets_file(
     "credentials.json",
     scopes=SCOPES,
-    redirect_uri="http://localhost:8000/auth/callback"
+    redirect_uri="https://emailsummerizer-ai-production.onrender.com/auth/callback"
 )
 
 

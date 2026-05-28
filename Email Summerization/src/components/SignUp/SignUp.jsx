@@ -1,5 +1,6 @@
 import React from "react";
 import "./SignUp.css";
+import.meta.env.VITE_API_URL
 
 const GoogleIcon = () => (
   <svg className="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +50,7 @@ export default function Login() {
           </p>
 
           {/* Google Button */}
-          <button className="google-btn" onClick={() => window.location.href= "http://localhost:8000/login"}>
+          <button className="google-btn" onClick={() => window.location.href= `${import.meta.env.VITE_API_URL}/login`}>
             <GoogleIcon />
             <span>Continue with Google</span>
             <div className="btn-hover-overlay" />

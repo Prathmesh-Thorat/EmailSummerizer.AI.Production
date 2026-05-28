@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './DailyOverview.css';
+import.meta.env.VITE_API_URL
 
 function formatDate(iso) {
   if (!iso) return "—";
@@ -21,7 +22,7 @@ function DailyOverview({daily, createdat}) {
   try {
     setLoading(true)
     await fetch(
-      "http://localhost:8000/regenerate-summary",
+      `${import.meta.env.VITE_API_URL}/regenerate-summary`,
       {
         method: "POST",
         credentials: "include"

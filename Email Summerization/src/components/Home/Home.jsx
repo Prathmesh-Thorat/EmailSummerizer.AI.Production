@@ -6,6 +6,7 @@ import DailyOverview from '../DailyOverview/DailyOverview';
 import PriorityFocus from '../PriorityFocus/PriorityFocus';
 import Footer from '../Footer/Footer';
 import './Home.css';
+import.meta.env.VITE_API_URL
 
 function App() {
   const [data, setData] = useState(null);
@@ -14,7 +15,7 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/summary", { credentials: "include" })
+    fetch(`${import.meta.env.VITE_API_URL}/summary`, { credentials: "include" })
       .then(res => {
         if (!res.ok) {
           throw new Error(`Server responded with ${res.status}: ${res.statusText}`);

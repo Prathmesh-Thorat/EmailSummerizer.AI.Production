@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import "./Taskpage.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import.meta.env.VITE_API_URL
 
 const PRIORITY_OPTIONS = ["All", "High", "Medium", "Low"];
 
@@ -40,7 +41,7 @@ export default function TasksPage() {
     setLoading(true);
     setError(null);
 
-    fetch("http://localhost:8000/tasks", {credentials : "include"})
+    fetch(`${import.meta.env.VITE_API_URL}/tasks`, {credentials : "include"})
       .then((res) => {
         if (!res.ok) throw new Error(`Server responded with ${res.status} ${res.statusText}`);
         return res.json();
@@ -67,7 +68,7 @@ export default function TasksPage() {
   try {
 
     const response = await fetch(
-      `http://localhost:8000/tasks/${id}/complete`,
+      `${import.meta.env.VITE_API_URL}/tasks/${id}/complete`,
       {
         method: "PUT",
         credentials: "include"

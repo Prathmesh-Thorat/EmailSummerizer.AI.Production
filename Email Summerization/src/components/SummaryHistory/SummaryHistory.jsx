@@ -3,6 +3,7 @@ import "./SummaryHistory.css";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { useNavigate } from "react-router-dom";
+import.meta.env.VITE_API_URL
 
 // ── Sub-components ──────────────────────────────────────
 
@@ -84,7 +85,7 @@ export default function SummaryHistory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("http://localhost:8000/summary/history", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/summary/history`, {
         credentials: "include",
       });
       if (!res.ok) throw new Error(`Server error: ${res.status}`);

@@ -16,7 +16,7 @@ function Navbar() {
         <button className="nav-btn"  onClick={async () => {
 
             await fetch(
-              "http://localhost:8000/logout",
+              `${import.meta.env.VITE_API_URL}/logout`,
               {
                 credentials: "include"
               }

@@ -20,7 +20,7 @@ Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173","https://email-summerizer-ai-production.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,7 +28,9 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key="super-secret-key"
+    secret_key="super-secret-key",
+    same_site="none",
+    https_only=True
 )
 
 app.include_router(auth_router)

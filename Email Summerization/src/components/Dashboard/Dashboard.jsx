@@ -4,7 +4,7 @@ import './Dashboard.css';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer'
 import { useNavigate } from "react-router-dom";
-
+import.meta.env.VITE_API_URL
 
 
 const Dashboard = () => {
@@ -13,7 +13,7 @@ const Dashboard = () => {
 
      useEffect(() => {
 
-    fetch("http://localhost:8000/me", {
+    fetch(`${import.meta.env.VITE_API_URL}/me`, {
       credentials: "include"
     })
       .then((res) => {
@@ -42,7 +42,7 @@ const Dashboard = () => {
       setActiveRange(range); // Update active tab UI
 
       const response = await fetch(
-        "http://localhost:8000/generate-summary",
+        `${import.meta.env.VITE_API_URL}/generate-summary`,
         {
           method: "POST",
           credentials: "include",
