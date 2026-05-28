@@ -59,7 +59,7 @@ def callback(
     request.session["user_id"] = user.id
     request.session["credentials"] = data["credentials"]
 
-    return RedirectResponse("http://localhost:5173/Dashboard")
+    return RedirectResponse("https://email-summerizer-ai-production.vercel.app/")
 
 from pydantic import BaseModel
 
