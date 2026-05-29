@@ -5,6 +5,7 @@ import SignUp from "./components/SignUp/SignUp";
 import Dashboard from "./components/Dashboard/Dashboard"
 import TasksPage from "./components/Taskpage/Taskpage";
 import SummaryHistory from "./components/SummaryHistory/SummaryHistory";
+import EmailsPage from "./components/EmailsPage/EmailsPage";
 export default function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/Taskpage" element = {<TasksPage/>}/>
         <Route path="/SummaryHistory" element = {<SummaryHistory/>}/>
           <Route path="/summary/:id"element={<Summaryid />}/>
+        <Route path="=/EmailsPage" element ={<EmailsPage/>}/>
       </Routes>
     </BrowserRouter>
   );
