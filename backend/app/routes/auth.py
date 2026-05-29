@@ -109,10 +109,7 @@ def generate_summary_route(
         return 
 
     # FETCH EMAILS
-    email_text = fetch_emails_from_credentials(
-        credentials_json,
-        days
-    )
+    email_text, email_metadata = fetch_emails_from_credentials(credentials_json, days)
 
     # EXISTING TASKS
     existing_tasks = db.query(Task).filter(
@@ -136,6 +133,25 @@ def generate_summary_route(
         body.range
     )
 
+    for important_email in result.get("important_emails", []):
+        match = next(
+        (m for m in email_metadata
+         if important_email.get("sender", "") in m["sender"]
+         or important_email.get("subject", "") in m["subject"]),
+        None
+    )
+    if match:
+        important_email["message_id"] = match["message_id"]
+
+    for email in result.get("all_emails", []):
+        match = next(
+        (m for m in email_metadata
+         if email.get("sender", "") in m["sender"]
+         or email.get("subject", "") in m["subject"]),
+        None
+    )
+    if match:
+        email["message_id"] = match["message_id"]
     # SAVE SUMMARY
     new_summary = Summary(
     user_id=user_id,

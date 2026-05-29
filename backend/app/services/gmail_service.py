@@ -56,13 +56,8 @@ def process_callback(code: str, state: str):
     }
 
 
-def fetch_emails_from_credentials(
-    credentials_json,
-    days=1
-):
-
+def fetch_emails_from_credentials(credentials_json, days=1):
     credentials_data = json.loads(credentials_json)
-
     credentials = Credentials(
         token=credentials_data["token"],
         refresh_token=credentials_data.get("refresh_token"),
@@ -72,11 +67,7 @@ def fetch_emails_from_credentials(
         scopes=credentials_data["scopes"]
     )
 
-    gmail_service = build(
-        "gmail",
-        "v1",
-        credentials=credentials
-    )
+    gmail_service = build("gmail", "v1", credentials=credentials)
 
     query = f"""
     -category:promotions
@@ -87,34 +78,26 @@ def fetch_emails_from_credentials(
     """
 
     results = gmail_service.users().messages().list(
-        userId="me",
-        q=query,
-        maxResults=100
+        userId="me", q=query, maxResults=100
     ).execute()
 
     messages = results.get("messages", [])
 
     email_text = ""
+    email_metadata = []  # NEW
 
     for msg in messages:
-
         message = gmail_service.users().messages().get(
-            userId="me",
-            id=msg["id"]
+            userId="me", id=msg["id"]
         ).execute()
 
         headers = message["payload"]["headers"]
-
         subject = ""
         sender = ""
 
         for h in headers:
-
-            if h["name"] == "Subject":
-                subject = h["value"]
-
-            if h["name"] == "From":
-                sender = h["value"]
+            if h["name"] == "Subject": subject = h["value"]
+            if h["name"] == "From": sender = h["value"]
 
         snippet = message.get("snippet", "")
 
@@ -124,5 +107,10 @@ Subject: {subject}
 Body: {snippet}
 
 """
-    
-    return email_text
+        email_metadata.append({       # NEW
+            "message_id": msg["id"],
+            "subject": subject,
+            "sender": sender
+        })
+
+    return email_text, email_metadata  # NOW A TUPLE

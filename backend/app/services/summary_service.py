@@ -23,7 +23,8 @@ The JSON must follow this exact schema:
   "important_emails": [
     {{
       "one_line_summary": "string",
-      "sender": "string",
+      "sender": "string — copy exactly from the email",
+       "subject": "string — copy exactly from the email",
       "detailed_summary": "string — exactly 2 sentences",
       "priority": "high" | "medium" | "low",
     }}
@@ -41,8 +42,9 @@ The JSON must follow this exact schema:
 
     "all_emails" :[{{
     "one_line_summary": "string",
-    "sender": "string",
-    "category": " Finance | Legal | HR | Marketing | Support | Meeting | Personal | Other"
+    "subject": "string — copy exactly from the email",
+    "sender": "string — copy exactly from the email",
+    "category": "Finance | Legal | HR | Support | Meeting | Personal | Other",
 
     }}
     ]
@@ -67,6 +69,7 @@ Rules:
 - active_follow_ups = emails that need a reply or action
 - total_emails = count of non-promotional emails only
 - all_emails = non promotional emails only
+- In all_emails, copy subject and sender EXACTLY as they appear in the email ,do not paraphrase or shorten them
 - Create tasks only if action is required
 - payment completed = completed
 - payment request = pending

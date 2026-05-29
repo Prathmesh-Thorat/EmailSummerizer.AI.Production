@@ -17,6 +17,7 @@ function formatDate(iso) {
 function DailyOverview({daily, createdat}) {
   
   const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
   const regenerateSummary = async () => {
 
   try {
