@@ -2,6 +2,15 @@ import React from 'react';
 import './Navbar.css';
 
 function Navbar() {
+
+  const handleLogout = async () => {
+  await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+  localStorage.removeItem("token");
+  localStorage.removeItem("summaryRange");
+  navigate("/SignUp");
+};
   return (
     <header className="navbar-header">
       <div className="navbar-container">
@@ -13,17 +22,7 @@ function Navbar() {
             <a href="#" className="nav-link">About</a>
           </nav>
         </div>
-        <button className="nav-btn"  onClick={async () => {
-
-            await fetch(
-              `${import.meta.env.VITE_API_URL}/logout`,
-              {
-                credentials: "include"
-              }
-            );
-
-            window.location.reload();
-          }}>Log Out</button>
+        <button className="nav-btn"  onClick={handleLogout()}>Log Out</button>
       </div>
     </header>
   );

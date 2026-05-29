@@ -4,7 +4,7 @@ import './Dashboard.css';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer'
 import { useNavigate } from "react-router-dom";
-import.meta.env.VITE_API_URL
+
 
 
 const Dashboard = () => {
@@ -58,7 +58,7 @@ fetch(`${import.meta.env.VITE_API_URL}/me`, {
       setActiveRange(range); // Update active tab UI
 
     const token = localStorage.getItem("token");
-    const response = await fetch(`${VITE_API_URL}/generate-summary`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/generate-summary`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
