@@ -41,7 +41,10 @@ export default function TasksPage() {
     setLoading(true);
     setError(null);
 
-    fetch(`${import.meta.env.VITE_API_URL}/tasks`, {credentials : "include"})
+    fetch(`${import.meta.env.VITE_API_URL}/tasks`, {  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+  }})
       .then((res) => {
         if (!res.ok) throw new Error(`Server responded with ${res.status} ${res.statusText}`);
         return res.json();
