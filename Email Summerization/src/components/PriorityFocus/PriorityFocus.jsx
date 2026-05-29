@@ -17,7 +17,7 @@ function PriorityFocus({impemails,all_emails}) {
           <h2 className="priority-title">Priority Focus</h2>
           <p className="priority-subtitle">High-impact communications requiring your decision.</p>
         </div>
-        <button className="view-all-btn" onClick={navigate("/EmailsPage", { state: { emails : all_emails } })}>
+        <button className="view-all-btn" onClick={() => navigate("/EmailsPage", { state: { emails : all_emails } })}>
   View All Emails
           <span className="material-symbols-outlined arrow-icon">arrow_forward</span>
         </button>
