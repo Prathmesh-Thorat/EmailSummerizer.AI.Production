@@ -1,8 +1,9 @@
 import React from 'react';
 import './Navbar.css';
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-
+  const navigate = useNavigate();
   const handleLogout = async () => {
   await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
