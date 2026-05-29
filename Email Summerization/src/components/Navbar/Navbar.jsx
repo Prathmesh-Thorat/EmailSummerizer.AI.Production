@@ -24,7 +24,7 @@ function Navbar() {
         <div className="navbar-left">
           <span className="navbar-logo">SummarizeAI</span>
           <nav className="navbar-links">
-            <Link to="/" className={`nav-link ${isActive('/Dashboard') ? 'active' : ''}`}>Dashboard</Link>
+            <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Dashboard</Link>
             <Link to="/TaskPage" className={`nav-link ${isActive('/TaskPage') ? 'active' : ''}`}>Tasks</Link>
             <Link to="/SummaryHistory" className={`nav-link ${isActive('/SummaryHistory') ? 'active' : ''}`}>Summaries</Link>
           </nav>
