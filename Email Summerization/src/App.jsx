@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/Taskpage" element = {<TasksPage/>}/>
         <Route path="/SummaryHistory" element = {<SummaryHistory/>}/>
           <Route path="/summary/:id"element={<Summaryid />}/>
-        <Route path="=/EmailsPage" element ={<EmailsPage/>}/>
+        <Route path="/EmailsPage" element ={<EmailsPage/>}/>
       </Routes>
     </BrowserRouter>
   );
