@@ -36,6 +36,7 @@ export default function TasksPage() {
   const [error, setError]           = useState(null);
   const [filterPriority, setFilter] = useState("All");
   const [completed, setCompleted]   = useState(new Set());
+  const token = localStorage.getItem("token");
 
   const fetchTasks = useCallback(() => {
     setLoading(true);
@@ -69,7 +70,6 @@ export default function TasksPage() {
   e.stopPropagation();
 
   try {
-    const token = localStorage.getItem("token");
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/tasks/${id}/complete`,
       {
