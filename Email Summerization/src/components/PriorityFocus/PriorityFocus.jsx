@@ -1,10 +1,12 @@
 import React from 'react';
 import EmailCard from '../EmailCard/EmailCard';
 import './PriorityFocus.css';
+import { useNavigate } from "react-router-dom";
 
-function PriorityFocus({impemails}) {
+function PriorityFocus({impemails,all_emails}) {
   const priorityEmails = [{impemails}
   ];
+  
 
   console.log({priorityEmails})
 
@@ -15,8 +17,8 @@ function PriorityFocus({impemails}) {
           <h2 className="priority-title">Priority Focus</h2>
           <p className="priority-subtitle">High-impact communications requiring your decision.</p>
         </div>
-        <button className="view-all-btn">
-          View All Priority
+        <button className="view-all-btn" onClick={navigate("/EmailsPage", { state: { emails : all_emails } })}>
+  View All Emails
           <span className="material-symbols-outlined arrow-icon">arrow_forward</span>
         </button>
       </div>
