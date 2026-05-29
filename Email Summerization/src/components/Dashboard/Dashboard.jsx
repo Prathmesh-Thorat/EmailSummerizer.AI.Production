@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
     const [tokenReady, setTokenReady] = useState(false);
+    const navigate = useNavigate();
      useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
