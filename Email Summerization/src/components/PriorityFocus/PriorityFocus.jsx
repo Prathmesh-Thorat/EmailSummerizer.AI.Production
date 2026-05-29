@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function PriorityFocus({impemails,all_emails}) {
   const priorityEmails = [{impemails}
   ];
-  
+  const navigate = useNavigate();  
 
   console.log({priorityEmails})
 
