@@ -25,10 +25,12 @@ function DailyOverview({daily, createdat}) {
       `${import.meta.env.VITE_API_URL}/regenerate-summary`,
       {
         method: "POST",
-        credentials: "include"
-      }
+        headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+         } }
     );
-
+  
     window.location.reload();
 
   } catch (err) {

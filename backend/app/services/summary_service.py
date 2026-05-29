@@ -26,7 +26,6 @@ The JSON must follow this exact schema:
       "sender": "string",
       "detailed_summary": "string — exactly 2 sentences",
       "priority": "high" | "medium" | "low",
-      "message_id": "string — the MESSAGE_ID from the email header, used to link directly to the email"
     }}
   ]
    "tasks": [
@@ -38,7 +37,15 @@ The JSON must follow this exact schema:
       "task_type": "payment"
       "task_key": "stable unique identifier",
     }}
-  ]
+    ]
+
+    "all_emails" :[{{
+    "one_line_summary": "string",
+    "sender": "string",
+    "category": " Finance | Legal | HR | Marketing | Support | Meeting | Personal | Other"
+
+    }}
+    ]
 }}
 
 EXISTING TASKS:
@@ -59,6 +66,7 @@ Rules:
 - approvals = emails requesting or confirming approval/sign-off
 - active_follow_ups = emails that need a reply or action
 - total_emails = count of non-promotional emails only
+- all_emails = non promotional emails only
 - Create tasks only if action is required
 - payment completed = completed
 - payment request = pending
