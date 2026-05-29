@@ -12,15 +12,11 @@ router = APIRouter()
 
 @router.get("/summary")
 def get_summary(
-    request: Request,
+    range: str = "today",
     db: Session = Depends(get_db),
     user_id: int = Depends(get_current_user)
 ):
-
-    summary_range = request.session.get(
-        "summary_range",
-        "today"
-    )
+    summary_range = range
 
     latest_summary = db.query(Summary).filter(
         Summary.user_id == user_id,

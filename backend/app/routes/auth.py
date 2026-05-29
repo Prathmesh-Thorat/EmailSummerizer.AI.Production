@@ -19,6 +19,12 @@ from app.services.gmail_service import (
 
 from app.services.summary_service import generate_summary
 
+
+from app.auth.jwt import create_token
+from fastapi.responses import JSONResponse
+from app.auth.dependencies import get_current_user
+from fastapi import Header
+
 router = APIRouter()
 
 
@@ -55,11 +61,13 @@ def callback(
 
         db.refresh(user)
 
-    request.session["user_email"] = user.email
-    request.session["user_id"] = user.id
-    request.session["credentials"] = data["credentials"]
-
-    return RedirectResponse("https://email-summerizer-ai-production.vercel.app/")
+    token = create_token({
+    "user_id": user.id,
+    "user_email": user.email,
+    "credentials": data["credentials"]
+})
+    frontend_url = "https://email-summerizer-ai-production.vercel.app"
+    return RedirectResponse(f"{frontend_url}/?token={token}")
 
 from pydantic import BaseModel
 
@@ -71,31 +79,17 @@ class SummaryRequest(BaseModel):
 @router.post("/generate-summary")
 def generate_summary_route(
     body: SummaryRequest,
-    request: Request,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user_id: int = Depends(get_current_user),
+    authorization: str = Header(...)
 ):
-
-    user_id = request.session.get("user_id")
-
-    if not user_id:
-
-        raise HTTPException(
-            status_code=401,
-            detail="Not logged in"
-        )
-
-    credentials_json = request.session.get("credentials")
-
+    from jose import jwt as _jwt
+    import os
+    payload = _jwt.decode(authorization[7:], os.getenv("JWT_SECRET"), algorithms=["HS256"])
+    credentials_json = payload.get("credentials")
     if not credentials_json:
-
-        raise HTTPException(
-            status_code=401,
-            detail="Missing credentials"
-        )
-
-    # RANGE
+        raise HTTPException(status_code=401, detail="Missing credentials")
     days = 1 if body.range == "today" else 7
-    request.session["summary_range"] = body.range
 
     two_hours_ago = func.now() - timedelta(hours=2)
 
@@ -185,34 +179,12 @@ def generate_summary_route(
 
 @router.post("/regenerate-summary")
 def regenerate_summary(
-    request: Request,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user_id: int = Depends(get_current_user),
+    authorization: str = Header(...)
 ):
-
-    user_id = request.session.get("user_id")
-
-    if not user_id:
-
-        raise HTTPException(
-            status_code=401,
-            detail="Not logged in"
-        )
-
-    summary_range = request.session.get(
-        "summary_range",
-        "today"
-    )
-
-    body = SummaryRequest(
-        range=summary_range,
-        force_refresh=True
-    )
-
-    return generate_summary_route(
-        body=body,
-        request=request,
-        db=db
-    )
+    body = SummaryRequest(range="today", force_refresh=True)
+    return generate_summary_route(body=body, db=db, user_id=user_id, authorization=authorization)
 
 @router.get("/emails")
 def getemails(
