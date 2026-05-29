@@ -11,30 +11,32 @@ SCOPES = [
 
 
 # GLOBAL OAUTH FLOW
-flow = Flow.from_client_secrets_file(
-    "credentials.json",
-    scopes=SCOPES,
-    redirect_uri="https://emailsummerizer-ai-production.onrender.com/auth/callback"
-)
+flow_store = {}
+
 
 
 # GENERATE GOOGLE LOGIN URL
 def get_auth_url():
-
-    auth_url, state = flow.authorization_url(
+    f = Flow.from_client_secrets_file(
+        "credentials.json",
+        scopes=SCOPES,
+        redirect_uri="https://emailsummerizer-ai-production.onrender.com/auth/callback"
+    )
+    auth_url, state = f.authorization_url(
         access_type="offline",
         include_granted_scopes="true",
     )
-
+    flow_store[state] = f  # save this exact instance
     return auth_url
 
 
 # PROCESS GOOGLE CALLBACK
-def process_callback(code: str):
-
-    flow.fetch_token(code=code)
-
-    credentials = flow.credentials
+def process_callback(code: str, state: str):
+    f = flow_store.pop(state, None)  # retrieve and remove
+    if not f:
+        raise Exception("Invalid or expired OAuth state")
+    f.fetch_token(code=code)
+    credentials = f.credentials
 
     gmail_service = build(
         "gmail",

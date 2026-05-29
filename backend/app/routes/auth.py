@@ -40,10 +40,11 @@ def login():
 def callback(
     request: Request,
     code: str,
+    state: str,
     db: Session = Depends(get_db)
 ):
 
-    data = process_callback(code)
+    data = process_callback(code,state)
 
     email = data["email"]
 
