@@ -84,7 +84,7 @@ function Summaryid() {
       <main className="main-content">
         <Stats stats={data.stats} />
         <DailyOverview daily={data.overall_summary} createdat={createdat} />
-        <PriorityFocus impemails={data.important_emails} />
+        <PriorityFocus impemails={data.important_emails} all_emails={data.all_emails} />
       </main>
       <Footer />
     </div>
