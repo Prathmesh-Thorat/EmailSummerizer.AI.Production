@@ -9,23 +9,39 @@ import.meta.env.VITE_API_URL
 
 const Dashboard = () => {
   
+    useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+  if (token) {
+    localStorage.setItem("token", token);
+    window.history.replaceState({}, "", "/");
+  }
+}, []);
+
     const navigate = useNavigate();
 
      useEffect(() => {
 
-    fetch(`${import.meta.env.VITE_API_URL}/me`, {
-      credentials: "include"
-    })
-      .then((res) => {
+const token = localStorage.getItem("token");
 
-        if (res.status === 401) {
-          navigate("/SignUp");
-        }
+if (!token) {
+  navigate("/SignUp");
+  return;
+}
 
-      })
-      .catch(() => {
-        navigate("/SignUp");
-      });
+fetch(`${import.meta.env.VITE_API_URL}/me`, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+  .then((res) => {
+    if (res.status === 401) {
+      navigate("/SignUp");
+    }
+  })
+  .catch(() => {
+    navigate("/SignUp");
+  });
 
   }, []);
 
@@ -37,24 +53,19 @@ const Dashboard = () => {
   // 2. Component Functions
   const generateSummary = async (range) => {
     try {
-      
+       localStorage.setItem("summaryRange", range);
       setLoading(range);
       setActiveRange(range); // Update active tab UI
 
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/generate-summary`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            range: range
-          }),
-        }
-        
-      );
+      const token = localStorage.getItem("token");
+const response = await fetch(`${API_URL}/generate-summary`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+  },
+  body: JSON.stringify({ range: range }),
+});
       
       navigate("/Summary");
 

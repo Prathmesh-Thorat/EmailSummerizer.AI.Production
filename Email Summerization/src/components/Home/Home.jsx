@@ -13,9 +13,15 @@ function App() {
   const[createdat,setcreatedat] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const token = localStorage.getItem("token");
+  const range = localStorage.getItem("summaryRange") || "today";
+
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/summary`, { credentials: "include" })
+    fetch(`${import.meta.env.VITE_API_URL}/summary?range=${range}`, {headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+  }})
       .then(res => {
         if (!res.ok) {
           throw new Error(`Server responded with ${res.status}: ${res.statusText}`);

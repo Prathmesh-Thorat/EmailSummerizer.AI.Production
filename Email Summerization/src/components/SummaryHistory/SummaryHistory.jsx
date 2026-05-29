@@ -84,10 +84,13 @@ export default function SummaryHistory() {
   async function fetchSummaryHistory() {
     setLoading(true);
     setError(null);
+    const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/summary/history`, {
-        credentials: "include",
-      });
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/summary/history`,{
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+  }});
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
       const data = await res.json();
       const sorted = [...data].sort(
