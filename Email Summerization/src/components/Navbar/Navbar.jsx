@@ -1,6 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -18,9 +19,9 @@ function Navbar() {
         <div className="navbar-left">
           <span className="navbar-logo">SummarizeAI</span>
           <nav className="navbar-links">
-            <a href="#" className="nav-link active">Features</a>
-            <a href="#" className="nav-link">Pricing</a>
-            <a href="#" className="nav-link">About</a>
+            <a href="" className="nav-link active">Features</a>
+            <Link to="/TasksPage" className='nav-link'>Tasks</Link>
+            <Link to="/SummaryHistory" className='nav-link'>Summaries</Link>
           </nav>
         </div>
         <button className="nav-btn"  onClick={() =>handleLogout()}>Log Out</button>
