@@ -25,7 +25,8 @@ The JSON must follow this exact schema:
       "one_line_summary": "string",
       "sender": "string",
       "detailed_summary": "string — exactly 2 sentences",
-      "priority": "high" | "medium" | "low"
+      "priority": "high" | "medium" | "low",
+      "message_id": "string — the MESSAGE_ID from the email header, used to link directly to the email"
     }}
   ]
    "tasks": [

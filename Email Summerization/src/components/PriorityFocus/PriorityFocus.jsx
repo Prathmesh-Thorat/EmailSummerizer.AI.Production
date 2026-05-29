@@ -27,6 +27,7 @@ function PriorityFocus({impemails}) {
             title={email.one_line_summary}
             description={email.detailed_summary}
             priority={email.priority}
+            id={email.message_id}
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './EmailCard.css';
 
-function EmailCard({ title, description,priority }) {
+function EmailCard({ title, description,priority ,id}) {
   return (
     <article className="email-card">
       <div className="email-card-body">
@@ -12,7 +12,10 @@ function EmailCard({ title, description,priority }) {
         <p className="email-card-desc">{description}</p>
       </div>
       <div className="email-card-action">
-        <button className="reply-btn">Reply</button>
+        <button className="reply-btn" onClick={()=> window.open(
+  `https://mail.google.com/mail/u/0/#inbox/${id}`,
+  '_blank'
+)}>Goto Mail</button>
       </div>
     </article>
   );
