@@ -72,7 +72,7 @@ export default function TasksPage() {
   try {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/tasks/${id}/complete`,
-      {
+      {method : "PUT",
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`
