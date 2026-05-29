@@ -25,6 +25,36 @@ from fastapi.responses import JSONResponse
 from app.auth.dependencies import get_current_user
 from fastapi import Header
 
+
+def match_message_id(email_from_ai, email_metadata):
+    ai_sender = email_from_ai.get("sender", "").lower().strip()
+    ai_subject = email_from_ai.get("subject", "").lower().strip()
+
+    best_match = None
+    best_score = 0
+
+    for m in email_metadata:
+        real_sender = m["sender"].lower().strip()
+        real_subject = m["subject"].lower().strip()
+
+        score = 0
+
+        # Check both directions for sender
+        if ai_sender and (ai_sender in real_sender or real_sender in ai_sender):
+            score += 2  # sender match weighted higher
+
+        # Check both directions for subject
+        if ai_subject and (ai_subject in real_subject or real_subject in ai_subject):
+            score += 1
+
+        if score > best_score:
+            best_score = score
+            best_match = m
+
+    # Only match if at least sender OR subject matched
+    return best_match if best_score > 0 else None
+
+
 router = APIRouter()
 
 
@@ -133,25 +163,18 @@ def generate_summary_route(
         body.range
     )
 
-    for important_email in result.get("important_emails", []):
-        match = next(
-        (m for m in email_metadata
-         if important_email.get("sender", "") in m["sender"]
-         or important_email.get("subject", "") in m["subject"]),
-        None
-    )
-    if match:
-        important_email["message_id"] = match["message_id"]
+    # important_emails
+    for email in result.get("important_emails", []):
+        match = match_message_id(email, email_metadata)
+        if match:
+            email["message_id"] = match["message_id"]
 
+# all_emails
     for email in result.get("all_emails", []):
-        match = next(
-        (m for m in email_metadata
-         if email.get("sender", "") in m["sender"]
-         or email.get("subject", "") in m["subject"]),
-        None
-    )
-    if match:
-        email["message_id"] = match["message_id"]
+        match = match_message_id(email, email_metadata)
+        if match:
+            email["message_id"] = match["message_id"]
+
     # SAVE SUMMARY
     new_summary = Summary(
     user_id=user_id,
