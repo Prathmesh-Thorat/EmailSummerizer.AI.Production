@@ -53,12 +53,12 @@ fetch(`${import.meta.env.VITE_API_URL}/me`, {
   // 2. Component Functions
   const generateSummary = async (range) => {
     try {
-       localStorage.setItem("summaryRange", range);
+      localStorage.setItem("summaryRange", range);
       setLoading(range);
       setActiveRange(range); // Update active tab UI
 
-      const token = localStorage.getItem("token");
-const response = await fetch(`${API_URL}/generate-summary`, {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${VITE_API_URL}/generate-summary`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
