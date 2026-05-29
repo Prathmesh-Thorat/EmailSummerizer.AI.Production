@@ -23,7 +23,7 @@ function Navbar() {
             <a href="#" className="nav-link">About</a>
           </nav>
         </div>
-        <button className="nav-btn"  onClick={handleLogout()}>Log Out</button>
+        <button className="nav-btn"  onClick={() =>handleLogout()}>Log Out</button>
       </div>
     </header>
   );

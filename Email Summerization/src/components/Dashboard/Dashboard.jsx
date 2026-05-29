@@ -9,41 +9,35 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   
-    useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get("token");
-  if (token) {
-    localStorage.setItem("token", token);
-    window.history.replaceState({}, "", "/");
-  }
-}, []);
-
-    const navigate = useNavigate();
-
      useEffect(() => {
-
-const token = localStorage.getItem("token");
-
-if (!token) {
-  navigate("/SignUp");
-  return;
-}
-
-fetch(`${import.meta.env.VITE_API_URL}/me`, {
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
-})
-  .then((res) => {
-    if (res.status === 401) {
-      navigate("/SignUp");
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    if (token) {
+      localStorage.setItem("token", token);
+      window.history.replaceState({}, "", "/");
     }
-  })
-  .catch(() => {
-    navigate("/SignUp");
-  });
-
+    setTokenReady(true); // Signal that token capture is done
   }, []);
+
+  // Step 2: Only run auth check AFTER token capture completes
+  useEffect(() => {
+    if (!tokenReady) return; // Wait for step 1
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/SignUp");
+      return;
+    }
+
+    fetch(`${import.meta.env.VITE_API_URL}/me`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((res) => {
+        if (res.status === 401) navigate("/SignUp");
+      })
+      .catch(() => navigate("/SignUp"));
+
+  }, [tokenReady]);
 
   // 1. Component States
   const [summary, setSummary] = useState(null);
