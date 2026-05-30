@@ -4,7 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import "./ContactUs.css";
 
-const DEVELOPER_EMAIL = "developer@summarizeai.com";
+const DEVELOPER_EMAIL = "esummerizer@gmail.com";
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ export default function ContactUs() {
           Contact
         </div>
         <h1 className="contact-hero-title">Get in Touch</h1>
+        <br />
         <p className="contact-hero-sub">
           Have a question, found a bug, or want to share feedback? Reach out directly — we'd love to hear from you.
         </p>

@@ -190,7 +190,7 @@ const SECTIONS = [
         <div className="legal-contact-grid">
           <div className="legal-contact-card">
             <div className="legal-contact-card-label">Email</div>
-            <div className="legal-contact-card-value">legal@summarizeai.com</div>
+            <div className="legal-contact-card-value">esummerizer@gmail.com</div>
           </div>
           <div className="legal-contact-card">
             <div className="legal-contact-card-label">Response Time</div>
@@ -218,6 +218,7 @@ export default function TermsOfService() {
           Legal
         </div>
         <h1 className="legal-hero-title">Terms of Service</h1>
+        <br />
         <p className="legal-hero-sub">
           Please read these terms carefully before using SummarizeAI. They govern your use of our email summarization platform.
         </p>
@@ -226,7 +227,7 @@ export default function TermsOfService() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
-            Effective: January 1, 2025
+            Effective: May 30, 2026
           </span>
           <span className="legal-meta-pill">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -238,7 +239,7 @@ export default function TermsOfService() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
             </svg>
-            Version 1.0
+            Version 1.1
           </span>
         </div>
       </div>

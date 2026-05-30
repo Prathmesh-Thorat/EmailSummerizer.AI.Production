@@ -279,6 +279,7 @@ export default function PrivacyPolicy() {
           Privacy
         </div>
         <h1 className="legal-hero-title">Privacy Policy</h1>
+        <br />
         <p className="legal-hero-sub">
           Your email data belongs to you. Here's a transparent account of what we collect, why, and how we protect it.
         </p>
