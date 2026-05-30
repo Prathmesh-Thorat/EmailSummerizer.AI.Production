@@ -230,11 +230,12 @@ def generate_summary_route(
 
 @router.post("/regenerate-summary")
 def regenerate_summary(
+    body : SummaryRequest,
     db: Session = Depends(get_db),
     user_id: int = Depends(get_current_user),
     authorization: str = Header(...)
 ):
-    body = SummaryRequest(range="today", force_refresh=True)
+    body = SummaryRequest(range=body.range, force_refresh=True)
     return generate_summary_route(body=body, db=db, user_id=user_id, authorization=authorization)
 
 @router.get("/emails")

@@ -14,7 +14,7 @@ function formatDate(iso) {
 }
 
 
-function DailyOverview({daily, createdat}) {
+function DailyOverview({daily, createdat , activerange}) {
   
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
@@ -29,7 +29,8 @@ function DailyOverview({daily, createdat}) {
         headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`
-         } }
+         },body: JSON.stringify({ range: activeRange }) 
+         }
     );
   
     window.location.reload();

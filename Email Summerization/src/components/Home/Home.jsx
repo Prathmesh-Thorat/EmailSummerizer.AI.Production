@@ -86,7 +86,7 @@ function App() {
       <Navbar />
       <main className="main-content">
         <Stats stats={data.stats} />
-        <DailyOverview daily={data.overall_summary} createdat={createdat} />
+        <DailyOverview daily={data.overall_summary} createdat={createdat} activerange={range} />
         <PriorityFocus impemails={data.important_emails} all_emails={data.all_emails} />
       </main>
       <Footer />
