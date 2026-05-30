@@ -1,7 +1,7 @@
 import React from 'react';
 import './EmailCard.css';
 
-function EmailCard({ title, description,priority ,id}) {
+function EmailCard({ title, description,priority ,id,sender}) {
   return (
     <article className="email-card">
       <div className="email-card-body">
@@ -9,6 +9,7 @@ function EmailCard({ title, description,priority ,id}) {
           <h3 className="email-card-title">{title}</h3>
           <span className={`priority-${priority}`}>{priority.toUpperCase()}</span>
         </div>
+        <p className="email-card-desc">Sender : {sender}</p>
         <p className="email-card-desc">{description}</p>
       </div>
       <div className="email-card-action">

@@ -184,6 +184,17 @@ def generate_summary_route(
     )
 
     db.add(new_summary)
+    db.flush()
+    all_summaries = (
+        db.query(Summary)
+        .filter(Summary.user_id == user_id)
+        .order_by(Summary.created_at.asc())   # oldest first
+        .all()
+    )
+    excess = len(all_summaries) - 5
+    if excess > 0:
+        for old in all_summaries[:excess]:
+            db.delete(old)
 
     # TASK UPDATE
     tasks = result.get("tasks", [])

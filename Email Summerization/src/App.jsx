@@ -6,6 +6,11 @@ import Dashboard from "./components/Dashboard/Dashboard"
 import TasksPage from "./components/Taskpage/Taskpage";
 import SummaryHistory from "./components/SummaryHistory/SummaryHistory";
 import EmailsPage from "./components/EmailsPage/EmailsPage";
+import TermsOfService from "./components/TermsOfService/TermsOfService";
+import DataPolicy from "./components/DataPolicy/DataPolicy";
+import ContactUs from "./components/ContactUs/ContactUs";
+
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -17,6 +22,9 @@ export default function App() {
         <Route path="/SummaryHistory" element = {<SummaryHistory/>}/>
           <Route path="/summary/:id"element={<Summaryid />}/>
         <Route path="/EmailsPage" element ={<EmailsPage/>}/>
+         <Route path="/terms" element={<TermsOfService />}/>
+        <Route path="/privacy" element={<DataPolicy />}/>
+        <Route path="/contact" element={<ContactUs />}/>
       </Routes>
     </BrowserRouter>
   );

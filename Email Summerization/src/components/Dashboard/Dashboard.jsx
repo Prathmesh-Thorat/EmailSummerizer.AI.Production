@@ -123,14 +123,14 @@ const Dashboard = () => {
         </div>
 
         <span className="badge primary-badge">
-          3 High Priority
+          Tasks
         </span>
       </div>
 
       <h2 className="card-title">Go to Tasks</h2>
 
       <p className="card-description">
-        Review AI-extracted action items from your morning newsletters and team updates.
+        Review AI-extracted Tasks from your Email Summaries.
       </p>
     </div>
 
@@ -167,7 +167,7 @@ const Dashboard = () => {
       <h2 className="card-title">Summary History</h2>
 
       <p className="card-description">
-        Browse your intelligent digest archive. Track trends and revisit past insights with ease.
+        Browse your Email Summray archive. Track and revisit past insights with ease.
       </p>
     </div>
 

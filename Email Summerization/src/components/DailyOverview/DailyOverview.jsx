@@ -50,7 +50,7 @@ function DailyOverview({daily, createdat}) {
       <div className="overview-card">
         <div className="overview-header">
           <div>
-            <h2 className="overview-title">Daily Intelligence Overview</h2>
+            <h2 className="overview-title">Intelligence Overview</h2>
             <p className="overview-date">{formatDate(createdat)}</p>
           </div>
           <button className="regen-btn" onClick={regenerateSummary}>

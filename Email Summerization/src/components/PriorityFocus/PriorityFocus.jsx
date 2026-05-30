@@ -15,7 +15,7 @@ function PriorityFocus({impemails,all_emails}) {
       <div className="priority-header">
         <div>
           <h2 className="priority-title">Priority Focus</h2>
-          <p className="priority-subtitle">High-impact communications requiring your decision.</p>
+          <p className="priority-subtitle">High-impact communications requiring your Attension.</p>
         </div>
         <button className="view-all-btn" onClick={() => navigate("/EmailsPage", { state: { emails : all_emails } })}>
   View All Emails
@@ -30,6 +30,7 @@ function PriorityFocus({impemails,all_emails}) {
             description={email.detailed_summary}
             priority={email.priority}
             id={email.message_id}
+            sender={email.sender}
           />
         ))}
       </div>
