@@ -14,10 +14,11 @@ function formatDate(iso) {
 }
 
 
-function DailyOverview({daily, createdat , activerange}) {
+function DailyOverview({daily, createdat}) {
   
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
+  const range = localStorage.getItem("summaryRange")
   const regenerateSummary = async () => {
 
   try {
@@ -29,7 +30,7 @@ function DailyOverview({daily, createdat , activerange}) {
         headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`
-         },body: JSON.stringify({ range: activeRange }) 
+         },body: JSON.stringify({ range: range }) 
          }
     );
   
