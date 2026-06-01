@@ -47,7 +47,7 @@ Rules:
 - finance_emails = invoices, payments, budgets, subscriptions (exclude promo pricing)
 - approvals = emails requesting or confirming approval/sign-off
 - active_follow_ups = emails needing a reply or action
-- important_emails = all emails requiring follow-up or that are otherwise important
+- important_emails = strictly add all emails requiring active follow-up or that are otherwise important
 - priority "high" = urgent/time-sensitive, "medium" = needs attention, "low" = FYI
 - Copy subject and sender EXACTLY as they appear in the email
 
@@ -111,6 +111,7 @@ Task rules:
 all_emails rules:
 - Include non-promotional emails only.
 - Copy subject and sender EXACTLY as they appear in the email.
+- summray should be short but detailed
 
 EMAILS:
 {all_email_text}
