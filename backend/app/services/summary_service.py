@@ -108,11 +108,12 @@ Task rules:
 5. Use semantic understanding.
 6. payment completed = completed; payment request = pending; approvals waiting = pending.
 7. If an email completes a task not in existing tasks, return it with status = completed.
+8. Task title shoud be one lined short and detailed
 
 all_emails rules:
 - Include non-promotional emails only.
 - Copy subject and sender EXACTLY as they appear in the email.
-- summray should be short but detailed
+- summray should be one lined short but detailed
 
 EMAILS:
 {all_email_text}
