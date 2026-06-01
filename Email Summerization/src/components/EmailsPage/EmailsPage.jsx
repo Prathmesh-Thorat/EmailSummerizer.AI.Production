@@ -4,37 +4,44 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import './EmailsPage.css';
 
-const CATEGORIES = ['All', 'Finance', 'Legal', 'HR', 'Support', 'Meeting', 'Personal', 'Other'];
+const CATEGORIES = ['All', 'Finance', 'Legal', 'HR', 'Support', 'Meeting', 'Personal', 'Complaints', 'Other'];
 
 const CATEGORY_COLORS = {
-  finance:  'cat-finance',
-  legal:    'cat-legal',
-  hr:       'cat-hr',
-  support:  'cat-support',
-  meeting:  'cat-meeting',
-  personal: 'cat-personal',
-  other:    'cat-other',
+  Finance:    'cat-finance',
+  Legal:      'cat-legal',
+  HR:         'cat-hr',
+  Support:    'cat-support',
+  Meeting:    'cat-meeting',
+  Personal:   'cat-personal',
+  Complaints: 'cat-complaints',
+  Other:      'cat-other',
 };
 
-// Normalize any casing the AI might return → Title case
 function normalizeCategory(raw) {
   if (!raw) return 'Other';
   const lower = raw.toLowerCase().trim();
-  // Map known variants
   const map = {
-    finance: 'Finance', financial: 'Finance',
-    legal: 'Legal', law: 'Legal',
-    hr: 'HR', 'human resources': 'HR',
-    support: 'Support',
-    meeting: 'Meeting', meetings: 'Meeting',
-    personal: 'Personal',
+    finance:           'Finance',
+    financial:         'Finance',
+    legal:             'Legal',
+    law:               'Legal',
+    hr:                'HR',
+    'human resources': 'HR',
+    h_r:               'HR',
+    support:           'Support',
+    meeting:           'Meeting',
+    meetings:          'Meeting',
+    personal:          'Personal',
+    complaints:        'Complaints',
+    complaint:         'Complaints',
+    other:             'Other',
   };
-  return map[lower] ?? (raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase());
+  return map[lower] ?? 'Other';
 }
 
 function EmailCard({ email }) {
   const normalized = normalizeCategory(email.category);
-  const catClass = CATEGORY_COLORS[normalized.toLowerCase()] || 'cat-other';
+  const catClass = CATEGORY_COLORS[normalized] || 'cat-other';
 
   const handleOpen = () => {
     if (email.message_id) {
@@ -80,10 +87,12 @@ function EmailCard({ email }) {
 export default function EmailsPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const emails = (state?.emails || []).map(e => ({
     ...e,
     category: normalizeCategory(e.category),
   }));
+
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filtered = activeCategory === 'All'

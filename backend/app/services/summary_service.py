@@ -92,7 +92,7 @@ Schema:
       "one_line_summary": "string",
       "subject": "string — copy exactly from the email",
       "sender": "string — copy exactly from the email",
-      "category": "Finance | Legal | HR | Support | Meeting | Personal | Other"
+      "category": "Finance | Legal | HR | Support | Meeting | Personal | Other | Complaints"
     }}
   ]
 }}
@@ -114,6 +114,7 @@ all_emails rules:
 - Include non-promotional emails only.
 - Copy subject and sender EXACTLY as they appear in the email.
 - summray should be one lined short but detailed
+- use given catregories only
 
 EMAILS:
 {all_email_text}
