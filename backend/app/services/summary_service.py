@@ -152,7 +152,7 @@ def merge_overview_batches(batch_results: list[dict]) -> dict:
 # MAIN ENTRY POINT — orchestrates batching
 # Called from auth.py (replaces old generate_summary)
 # ─────────────────────────────────────────────────────────────
-def generate_summary(email_text: str, existing_task_context: str, range: str) -> dict:
+def generate_summary(email_text: str, existing_task_context: str, email_range: str) -> dict:
     """
     1. Split emails into batches of BATCH_SIZE.
     2. Run overview pass (summary/stats/important_emails) on each batch in parallel via threads.
@@ -183,7 +183,7 @@ def generate_summary(email_text: str, existing_task_context: str, range: str) ->
     if batch_texts:
         with ThreadPoolExecutor(max_workers=min(len(batch_texts), 5)) as executor:
             futures = {
-                executor.submit(generate_overview_from_batch, bt, range): bt
+                executor.submit(generate_overview_from_batch, bt, email_range): bt
                 for bt in batch_texts
             }
             for future in as_completed(futures):
@@ -195,7 +195,7 @@ def generate_summary(email_text: str, existing_task_context: str, range: str) ->
     overview = merge_overview_batches(batch_results)
 
     # ── Pass 2: tasks + all_emails (full corpus, single call) ──
-    task_result = generate_tasks_from_emails(email_text, existing_task_context, range)
+    task_result = generate_tasks_from_emails(email_text, existing_task_context, email_range)
 
     # ── Combine ──
     return {
