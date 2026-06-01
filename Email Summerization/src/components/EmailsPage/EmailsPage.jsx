@@ -7,17 +7,34 @@ import './EmailsPage.css';
 const CATEGORIES = ['All', 'Finance', 'Legal', 'HR', 'Support', 'Meeting', 'Personal', 'Other'];
 
 const CATEGORY_COLORS = {
-  Finance:  'cat-finance',
-  Legal:    'cat-legal',
-  HR:       'cat-hr',
-  Support:  'cat-support',
-  Meeting:  'cat-meeting',
-  Personal: 'cat-personal',
-  Other:    'cat-other',
+  finance:  'cat-finance',
+  legal:    'cat-legal',
+  hr:       'cat-hr',
+  support:  'cat-support',
+  meeting:  'cat-meeting',
+  personal: 'cat-personal',
+  other:    'cat-other',
 };
 
+// Normalize any casing the AI might return → Title case
+function normalizeCategory(raw) {
+  if (!raw) return 'Other';
+  const lower = raw.toLowerCase().trim();
+  // Map known variants
+  const map = {
+    finance: 'Finance', financial: 'Finance',
+    legal: 'Legal', law: 'Legal',
+    hr: 'HR', 'human resources': 'HR',
+    support: 'Support',
+    meeting: 'Meeting', meetings: 'Meeting',
+    personal: 'Personal',
+  };
+  return map[lower] ?? (raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase());
+}
+
 function EmailCard({ email }) {
-  const catClass = CATEGORY_COLORS[email.category] || 'cat-other';
+  const normalized = normalizeCategory(email.category);
+  const catClass = CATEGORY_COLORS[normalized.toLowerCase()] || 'cat-other';
 
   const handleOpen = () => {
     if (email.message_id) {
@@ -29,7 +46,7 @@ function EmailCard({ email }) {
     }
   };
 
-  const displaySender = email.sender?.replace(/<[^>]+>/, '').trim() || email.sender;
+  const displaySender = email.sender?.replace(/<[^>]+>/g, '').trim() || email.sender;
 
   return (
     <div className="email-card">
@@ -37,7 +54,7 @@ function EmailCard({ email }) {
       <div className="email-card__body">
         <div className="email-card__meta">
           <span className="email-card__sender">{displaySender}</span>
-          <span className={`email-card__category ${catClass}`}>{email.category}</span>
+          <span className={`email-card__category ${catClass}`}>{normalized}</span>
         </div>
         <h3 className="email-card__subject">{email.subject}</h3>
         <p className="email-card__summary">
@@ -63,7 +80,10 @@ function EmailCard({ email }) {
 export default function EmailsPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const emails = state?.emails || [];
+  const emails = (state?.emails || []).map(e => ({
+    ...e,
+    category: normalizeCategory(e.category),
+  }));
   const [activeCategory, setActiveCategory] = useState('All');
 
   const filtered = activeCategory === 'All'
@@ -71,7 +91,8 @@ export default function EmailsPage() {
     : emails.filter(e => e.category === activeCategory);
 
   const counts = emails.reduce((acc, e) => {
-    acc[e.category] = (acc[e.category] || 0) + 1;
+    const cat = e.category;
+    acc[cat] = (acc[cat] || 0) + 1;
     return acc;
   }, {});
 
