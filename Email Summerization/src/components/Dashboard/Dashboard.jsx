@@ -167,7 +167,7 @@ const Dashboard = () => {
       <h2 className="card-title">Summary History</h2>
 
       <p className="card-description">
-        Browse your Email Summray archive. Track and revisit past insights with ease.
+        Browse your Email Summray archive. Track and revisit past 5 insights with ease.
       </p>
     </div>
 
