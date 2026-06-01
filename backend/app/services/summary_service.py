@@ -47,9 +47,10 @@ Rules:
 - finance_emails = invoices, payments, budgets, subscriptions (exclude promo pricing)
 - approvals = emails requesting or confirming approval/sign-off
 - active_follow_ups = emails needing a reply or action
-- important_emails = strictly add all emails requiring active follow-up or that are otherwise important
+- important_emails = strictly add all emails requiring active follow-up or that are serious or otherwise important
 - priority "high" = urgent/time-sensitive, "medium" = needs attention, "low" = FYI
 - Copy subject and sender EXACTLY as they appear in the email
+- dont rush anything focus on accuracy.
 
 EMAILS:
 {batch_email_text}
