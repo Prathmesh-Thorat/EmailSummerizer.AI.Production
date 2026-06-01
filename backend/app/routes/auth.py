@@ -97,7 +97,7 @@ def callback(
     "user_email": user.email,
     "credentials": data["credentials"]
 })
-    frontend_url = "https://email-summerizer-ai-production.vercel.app"
+    frontend_url = "https://summerizeai.vercel.app"
     return RedirectResponse(f"{frontend_url}/?token={token}")
 
 from pydantic import BaseModel
