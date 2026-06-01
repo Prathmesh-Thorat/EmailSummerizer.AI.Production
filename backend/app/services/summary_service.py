@@ -47,7 +47,7 @@ Rules:
 - finance_emails = invoices, payments, budgets, subscriptions (exclude promo pricing)
 - approvals = emails requesting or confirming approval/sign-off
 - active_follow_ups = emails needing a reply or action
-- important_emails = strictly add all emails requiring active follow-up or that are serious or otherwise important
+- important_emails = strictly add all emails counted as active follow-up or that are serious or otherwise important this cannot be less that active follow ups
 - priority "high" = urgent/time-sensitive, "medium" = needs attention, "low" = FYI
 - Copy subject and sender EXACTLY as they appear in the email
 - dont rush anything focus on accuracy.
@@ -108,7 +108,7 @@ Task rules:
 5. Use semantic understanding.
 6. payment completed = completed; payment request = pending; approvals waiting = pending.
 7. If an email completes a task not in existing tasks, return it with status = completed and ipdate at = created at.
-8. Task title shoud be one lined short and detailed
+8. Task title shoud be one lined short and detailed.
 
 all_emails rules:
 - Include non-promotional emails only.
