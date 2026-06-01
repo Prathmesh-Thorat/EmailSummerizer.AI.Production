@@ -52,7 +52,7 @@ function DailyOverview({daily, createdat , sumrange}) {
       <div className="overview-card">
         <div className="overview-header">
           <div>
-            <h2 className="overview-title">${sumrange}'s  Intelligence Overview</h2>
+            <h2 className="overview-title">{sumrange.toUpperCase()}'s  Intelligence Overview</h2>
             <p className="overview-date">{formatDate(createdat)}</p>
           </div>
           <button className="regen-btn" onClick={regenerateSummary}>
