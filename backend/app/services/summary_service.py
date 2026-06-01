@@ -111,7 +111,7 @@ Task rules:
 8. Task title shoud be one lined short and detailed.
 
 all_emails rules:
-- Include non-promotional emails only.
+- Include every non-promotional emails you got.
 - Copy subject and sender EXACTLY as they appear in the email.
 - summray should be one lined short but detailed
 - use given catregories only
