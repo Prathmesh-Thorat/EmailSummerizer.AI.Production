@@ -107,7 +107,7 @@ Task rules:
 4. Detect: payment completed, issue resolved, meeting done, subscription renewed, etc.
 5. Use semantic understanding.
 6. payment completed = completed; payment request = pending; approvals waiting = pending.
-7. If an email completes a task not in existing tasks, return it with status = completed.
+7. If an email completes a task not in existing tasks, return it with status = completed and ipdate at = created at.
 8. Task title shoud be one lined short and detailed
 
 all_emails rules:
