@@ -62,7 +62,12 @@ function DailyOverview({daily, createdat , sumrange}) {
         </div>
         <div className="overview-content">
           <p>
-            {daily}
+            {daily
+  ? daily.split("\n\n").map((para, i) => (
+      <p key={i}>{para}</p>
+    ))
+  : <p>—</p>
+}
           </p>
         </div>
       </div>

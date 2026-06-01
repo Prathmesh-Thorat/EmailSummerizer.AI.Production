@@ -140,7 +140,7 @@ def merge_overview_batches(batch_results: list[dict]) -> dict:
             merged_stats[key] += stats.get(key, 0)
         merged_important.extend(b.get("important_emails") or [])
 
-    combined_overview = " ".join(all_summaries) if all_summaries else None
+    combined_overview = "\n\n".join(all_summaries) if all_summaries else None
 
     return {
         "overall_summary": combined_overview,

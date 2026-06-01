@@ -251,30 +251,7 @@ body {
   transform: scale(0.97);
 }
 
-.legal-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: 1px solid var(--outline-variant);
-  border-radius: 999px;
-  padding: 0.45rem 1rem;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--on-surface-variant);
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
-  margin-bottom: 2rem;
-}
-.legal-back-btn:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-}
-.legal-back-btn svg {
-  width: 14px;
-  height: 14px;
-}
+
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 600px) {
