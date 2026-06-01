@@ -31,7 +31,7 @@ function Summaryid() {
       .then(data => {
         setData(data.summary);
         setcreatedat(data.created_at);
-        sumrange(data.range);
+        setsumrange(data.range);
         setLoading(false);
         
       })
