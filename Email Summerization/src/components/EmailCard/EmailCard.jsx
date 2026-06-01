@@ -10,6 +10,7 @@ function EmailCard({ title, description,priority ,id,sender}) {
           <span className={`priority-${priority}`}>{priority.toUpperCase()}</span>
         </div>
         <p className="email-card-desc">Sender : {sender}</p>
+        <br />
         <p className="email-card-desc">{description}</p>
       </div>
       <div className="email-card-action">
