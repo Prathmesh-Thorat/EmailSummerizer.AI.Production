@@ -11,6 +11,7 @@ import.meta.env.VITE_API_URL
 function App() {
   const [data, setData] = useState(null);
   const[createdat,setcreatedat] = useState(null);
+  const[sumrange,setsumrange]=useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
@@ -31,6 +32,7 @@ function App() {
       .then(data => {
         setData(data.summary);
         setcreatedat(data.created_at);
+        setsumrange(data.range)
         setLoading(false);
         
       })
@@ -86,7 +88,7 @@ function App() {
       <Navbar />
       <main className="main-content">
         <Stats stats={data.stats} />
-        <DailyOverview daily={data.overall_summary} createdat={createdat} />
+        <DailyOverview daily={data.overall_summary} createdat={createdat} sumrange={sumrange} />
         <PriorityFocus impemails={data.important_emails} all_emails={data.all_emails} />
       </main>
       <Footer />

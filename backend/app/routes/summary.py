@@ -26,7 +26,8 @@ def get_summary(
     ).first()
 
     return { "summary": json.loads(latest_summary.data),
-             "created_at": latest_summary.created_at,}
+             "created_at": latest_summary.created_at,
+             "range" : latest_summary.range}
 
 @router.get("/summary/history")
 def get_summary_history(
@@ -73,4 +74,5 @@ def get_single_summary(
         )
 
     return {"summary" : json.loads(summary.data),
-            "created_at" : summary.created_at}
+            "created_at" : summary.created_at,
+            "range ": summary.range}
