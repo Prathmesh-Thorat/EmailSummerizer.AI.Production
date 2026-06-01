@@ -153,8 +153,8 @@ export default function EmailsPage() {
             <div className="emails-list__empty">No emails in this category.</div>
           ) : (
             filtered.map((email, i) => (
-              <EmailCard key={email.message_id || i} email={email} />
-            ))
+  <EmailCard key={email.message_id || `${email.subject}-${email.sender}-${i}`} email={email} />
+))
           )}
         </section>
 
