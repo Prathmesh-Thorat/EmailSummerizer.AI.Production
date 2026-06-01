@@ -187,6 +187,16 @@
   vertical-align: middle;
 }
 
+/* Category badge — all styling via inline style in JSX, only shape here */
+.email-card__category {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
 /* Action */
 .email-card__action {
   display: flex;
@@ -238,23 +248,6 @@
   transform: translateX(3px);
 }
 
-/* ── Category Badge Colors ── */
-.email-card__category {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 999px;
-  letter-spacing: 0.02em;
-}
-
-.cat-finance  { background: #fef3c7; color: #92400e; }
-.cat-legal    { background: #fce7f3; color: #9d174d; }
-.cat-hr       { background: #d1fae5; color: #065f46; }
-.cat-support  { background: #dbeafe; color: #1e40af; }
-.cat-meeting  { background: #ede9fe; color: #5b21b6; }
-.cat-personal { background: #ffedd5; color: #9a3412; }
-.cat-other    { background: #f1f5f9; color: #475569; }
-
 /* ── Empty State ── */
 .emails-empty {
   display: flex;
@@ -286,8 +279,4 @@
   background: #3525cd;
   color: #fff;
   border-color: #3525cd;
-}
-.cat-complaints {
-  background-color: #fee2e2;
-  color: #b91c1c;
 }

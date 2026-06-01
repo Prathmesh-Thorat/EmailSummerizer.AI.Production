@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -6,42 +6,51 @@ import './EmailsPage.css';
 
 const CATEGORIES = ['All', 'Finance', 'Legal', 'HR', 'Support', 'Meeting', 'Personal', 'Complaints', 'Other'];
 
-const CATEGORY_COLORS = {
-  Finance:    'cat-finance',
-  Legal:      'cat-legal',
-  HR:         'cat-hr',
-  Support:    'cat-support',
-  Meeting:    'cat-meeting',
-  Personal:   'cat-personal',
-  Complaints: 'cat-complaints',
-  Other:      'cat-other',
+const CATEGORY_STYLES = {
+  Finance:    { background: '#fef3c7', color: '#92400e' },
+  Legal:      { background: '#fce7f3', color: '#9d174d' },
+  HR:         { background: '#d1fae5', color: '#065f46' },
+  Support:    { background: '#dbeafe', color: '#1e40af' },
+  Meeting:    { background: '#ede9fe', color: '#5b21b6' },
+  Personal:   { background: '#ffedd5', color: '#9a3412' },
+  Complaints: { background: '#fee2e2', color: '#b91c1c' },
+  Other:      { background: '#f1f5f9', color: '#475569' },
+};
+
+const NORMALIZE_MAP = {
+  finance:           'Finance',
+  financial:         'Finance',
+  legal:             'Legal',
+  law:               'Legal',
+  hr:                'HR',
+  'human resources': 'HR',
+  support:           'Support',
+  meeting:           'Meeting',
+  meetings:          'Meeting',
+  personal:          'Personal',
+  complaints:        'Complaints',
+  complaint:         'Complaints',
+  other:             'Other',
 };
 
 function normalizeCategory(raw) {
   if (!raw) return 'Other';
-  const lower = raw.toLowerCase().trim();
-  const map = {
-    finance:           'Finance',
-    financial:         'Finance',
-    legal:             'Legal',
-    law:               'Legal',
-    hr:                'HR',
-    'human resources': 'HR',
-    h_r:               'HR',
-    support:           'Support',
-    meeting:           'Meeting',
-    meetings:          'Meeting',
-    personal:          'Personal',
-    complaints:        'Complaints',
-    complaint:         'Complaints',
-    other:             'Other',
-  };
-  return map[lower] ?? 'Other';
+  return NORMALIZE_MAP[raw.toLowerCase().trim()] ?? 'Other';
+}
+
+function buildStableKey(email, index) {
+  return [
+    email.message_id,
+    email.subject,
+    email.sender,
+    index,
+  ]
+    .filter(Boolean)
+    .join('::');
 }
 
 function EmailCard({ email }) {
-  const normalized = normalizeCategory(email.category);
-  const catClass = CATEGORY_COLORS[normalized] || 'cat-other';
+  const badgeStyle = CATEGORY_STYLES[email.category] ?? CATEGORY_STYLES.Other;
 
   const handleOpen = () => {
     if (email.message_id) {
@@ -53,7 +62,7 @@ function EmailCard({ email }) {
     }
   };
 
-  const displaySender = email.sender?.replace(/<[^>]+>/g, '').trim() || email.sender;
+  const displaySender = email.sender?.replace(/<[^>]+>/g, '').trim() || '—';
 
   return (
     <div className="email-card">
@@ -61,7 +70,9 @@ function EmailCard({ email }) {
       <div className="email-card__body">
         <div className="email-card__meta">
           <span className="email-card__sender">{displaySender}</span>
-          <span className={`email-card__category ${catClass}`}>{normalized}</span>
+          <span className="email-card__category" style={badgeStyle}>
+            {email.category}
+          </span>
         </div>
         <h3 className="email-card__subject">{email.subject}</h3>
         <p className="email-card__summary">
@@ -87,23 +98,31 @@ function EmailCard({ email }) {
 export default function EmailsPage() {
   const { state } = useLocation();
   const navigate = useNavigate();
-
-  const emails = (state?.emails || []).map(e => ({
-    ...e,
-    category: normalizeCategory(e.category),
-  }));
-
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const filtered = activeCategory === 'All'
-    ? emails
-    : emails.filter(e => e.category === activeCategory);
+  const emails = useMemo(() =>
+    (state?.emails || []).map((e, i) => ({
+      ...e,
+      category: normalizeCategory(e.category),
+      _stableKey: buildStableKey(e, i),
+    })),
+    [state?.emails]
+  );
 
-  const counts = emails.reduce((acc, e) => {
-    const cat = e.category;
-    acc[cat] = (acc[cat] || 0) + 1;
-    return acc;
-  }, {});
+  const filtered = useMemo(() =>
+    activeCategory === 'All'
+      ? emails
+      : emails.filter(e => e.category === activeCategory),
+    [emails, activeCategory]
+  );
+
+  const counts = useMemo(() =>
+    emails.reduce((acc, e) => {
+      acc[e.category] = (acc[e.category] || 0) + 1;
+      return acc;
+    }, {}),
+    [emails]
+  );
 
   if (!state?.emails) {
     return (
@@ -152,9 +171,9 @@ export default function EmailsPage() {
           {filtered.length === 0 ? (
             <div className="emails-list__empty">No emails in this category.</div>
           ) : (
-            filtered.map((email, i) => (
-  <EmailCard key={email.message_id || `${email.subject}-${email.sender}-${i}`} email={email} />
-))
+            filtered.map(email => (
+              <EmailCard key={email._stableKey} email={email} />
+            ))
           )}
         </section>
 
