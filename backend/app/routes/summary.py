@@ -75,4 +75,4 @@ def get_single_summary(
 
     return {"summary" : json.loads(summary.data),
             "created_at" : summary.created_at,
-            "range ": summary.range}
+            "range": summary.range}
