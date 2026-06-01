@@ -144,6 +144,10 @@ export default function EmailsPage() {
       <Navbar />
       <main className="emails-page">
 
+        <button className="emails-back-btn" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+
         <div className="emails-header">
           <h1 className="emails-header__title">All Emails</h1>
           <p className="emails-header__subtitle">

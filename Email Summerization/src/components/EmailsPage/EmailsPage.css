@@ -6,6 +6,29 @@
   min-height: 100vh;
 }
 
+/* ── Back Button ── */
+.emails-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  padding: 8px 16px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.emails-back-btn:hover {
+  background: #3525cd;
+  color: #fff;
+  border-color: #3525cd;
+}
+
 /* ── Header ── */
 .emails-header {
   margin-bottom: 32px;
