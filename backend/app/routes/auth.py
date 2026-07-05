@@ -11,6 +11,7 @@ from app.models.user import User
 from datetime import datetime, timedelta,timezone
 import json
 from app.models.task import Task
+from app.models.email import Email
 from app.services.gmail_service import (
     get_auth_url,
     process_callback,
@@ -140,6 +141,16 @@ def generate_summary_route(
 
     # FETCH EMAILS
     email_text, email_metadata = fetch_emails_from_credentials(credentials_json, days)
+
+    # SAVE RAW EMAILS (before AI processing)
+    new_email_record = Email(
+        user_id=user_id,
+        range=body.range,
+        raw_text=email_text,
+        metadata_json=json.dumps(email_metadata)
+    )
+    db.add(new_email_record)
+    db.commit()
 
     # EXISTING TASKS
     existing_tasks = db.query(Task).filter(
