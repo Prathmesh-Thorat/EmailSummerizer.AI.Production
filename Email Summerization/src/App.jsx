@@ -9,6 +9,7 @@ import EmailsPage from "./components/EmailsPage/EmailsPage";
 import TermsOfService from "./components/TermsOfService/TermsOfService";
 import DataPolicy from "./components/DataPolicy/DataPolicy";
 import ContactUs from "./components/ContactUs/ContactUs";
+import AllEmailsPage from "./components/allemail/allemail";
 
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
          <Route path="/terms" element={<TermsOfService />}/>
         <Route path="/privacy" element={<DataPolicy />}/>
         <Route path="/contact" element={<ContactUs />}/>
+        <Route path="/allemail" element={<AllEmailsPage/>}/>
       </Routes>
     </BrowserRouter>
   );
