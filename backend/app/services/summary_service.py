@@ -7,7 +7,7 @@ BATCH_SIZE = 15
 
 def _call_groq(prompt: str) -> str:
     response = client.chat.completions.create(
-        model="qwen/qwen3-32b",
+        model="gemini-2.5-flash",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3
     )
