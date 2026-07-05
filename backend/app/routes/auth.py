@@ -11,7 +11,7 @@ from app.models.user import User
 from datetime import datetime, timedelta,timezone
 import json
 from app.models.task import Task
-from app.models.email import Email
+from app.models.Email import Email
 from app.services.gmail_service import (
     get_auth_url,
     process_callback,
