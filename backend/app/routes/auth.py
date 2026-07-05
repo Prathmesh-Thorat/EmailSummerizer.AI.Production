@@ -240,12 +240,26 @@ def regenerate_summary(
 
 @router.get("/emails")
 def getemails(
-    request : Request
+    user_id: int = Depends(get_current_user),
+    authorization: str = Header(...)
 ):
-    user_id = request.session.get("user_id")
-    credentials_json = request.session.get("credentials")
+    from jose import jwt as _jwt
+    import os
+
+    payload = _jwt.decode(
+        authorization[7:],
+        os.getenv("JWT_SECRET"),
+        algorithms=["HS256"]
+    )
+
+    credentials_json = payload.get("credentials")
+
+    if not credentials_json:
+        raise HTTPException(status_code=401, detail="Missing credentials")
+
     email_text = fetch_emails_from_credentials(
         credentials_json,
         1
     )
+
     return email_text
