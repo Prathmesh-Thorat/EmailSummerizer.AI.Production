@@ -122,6 +122,7 @@ export default function AllEmailsPage() {
       }
 
       const data = await response.json();
+      console.log(data);
       const emailsPayload = Array.isArray(data) ? data : (data.emails || []);
       setRawEmails(emailsPayload);
       setStatus('success');
