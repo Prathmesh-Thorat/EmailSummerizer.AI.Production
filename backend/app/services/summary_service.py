@@ -5,13 +5,19 @@ from app.ai.groq_client import client
 BATCH_SIZE = 15
 
 
-def _call_groq(prompt: str) -> str:
-    response = client.chat.completions.create(
+from google.genai import types
+
+def _call_gemini(prompt: str) -> str:
+    response = client.models.generate_content(
         model="gemini-2.5-flash",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.3
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            temperature=0.3,
+            response_mime_type="application/json"
+        )
     )
-    return response.choices[0].message.content
+
+    return response.text
 
 
 # ─────────────────────────────────────────────────────────────
@@ -57,7 +63,7 @@ EMAILS:
 
 IF YOU CANNOT SEE ANY EMAILS RETURN THE SAME JSON WITH NULL INSIDE"""
 
-    raw = _call_groq(prompt)
+    raw = _call_gemini(prompt)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
@@ -121,7 +127,7 @@ EMAILS:
 
 IF YOU CANNOT SEE ANY EMAILS RETURN THE SAME JSON WITH NULL INSIDE"""
 
-    raw = _call_groq(prompt)
+    raw = _call_gemini(prompt)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
