@@ -38,13 +38,18 @@ def _call_cerebras(prompt: str) -> str:
 
     return response.choices[0].message.content
 
+from google.genai.errors import APIError
+
 def _call_llm(prompt):
     try:
         return _call_gemini(prompt)
 
-    except (ResourceExhausted, ServiceUnavailable):
-        print("Gemini quota exceeded or service unavailable. Falling back to Cerebras.")
-        return _call_cerebras(prompt)
+    except APIError as e:
+        if e.code in (429, 503):
+            print(f"Gemini returned {e.code}. Falling back to Cerebras.")
+            return _call_cerebras(prompt)
+
+        raise
 # ─────────────────────────────────────────────────────────────
 # PASS 1 — Overview batch (summary + stats + important emails)
 # Called once per 15-email batch.
