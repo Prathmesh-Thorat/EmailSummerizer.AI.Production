@@ -1,12 +1,9 @@
 import json
 from app.ai.groq_client import client
-
-
+from google.genai import types
 BATCH_SIZE = 20
 
-
-from google.genai import types
-
+"""
 def _call_gemini(prompt: str) -> str:
     response = client.models.generate_content(
         model="gemini-2.5-flash-lite",
@@ -18,8 +15,25 @@ def _call_gemini(prompt: str) -> str:
     )
 
     return response.text
+"""
+def _call_cerebras(prompt: str) -> str:
+    response = client.chat.completions.create(
+        model="",
+        messages=[
+            {
+                "role": "system",
+                "content": "You always return valid JSON only."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0.3,
+        response_format={"type": "json_object"}
+    )
 
-
+    return response.choices[0].message.content
 # ─────────────────────────────────────────────────────────────
 # PASS 1 — Overview batch (summary + stats + important emails)
 # Called once per 15-email batch.
@@ -63,7 +77,7 @@ EMAILS:
 
 IF YOU CANNOT SEE ANY EMAILS RETURN THE SAME JSON WITH NULL INSIDE"""
 
-    raw = _call_gemini(prompt)
+    raw = _call_cerebras(prompt)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
@@ -127,7 +141,7 @@ EMAILS:
 
 IF YOU CANNOT SEE ANY EMAILS RETURN THE SAME JSON WITH NULL INSIDE"""
 
-    raw = _call_gemini(prompt)
+    raw = _call_cerebras(prompt)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
