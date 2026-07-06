@@ -1,5 +1,6 @@
 import json
-from app.ai.groq_client import client
+from backend.app.ai.gemini_client import client
+from backend.app.ai.cerebrea_client import c_client
 from google.genai import types
 from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
 
@@ -19,7 +20,7 @@ def _call_gemini(prompt: str) -> str:
     return response.text
 
 def _call_cerebras(prompt: str) -> str:
-    response = client.chat.completions.create(
+    response = c_client.chat.completions.create(
         model="gpt-oss-120b",
         messages=[
             {
