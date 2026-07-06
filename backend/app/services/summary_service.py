@@ -1,9 +1,11 @@
 import json
 from app.ai.groq_client import client
 from google.genai import types
+from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
+
 BATCH_SIZE = 20
 
-"""
+
 def _call_gemini(prompt: str) -> str:
     response = client.models.generate_content(
         model="gemini-2.5-flash-lite",
@@ -15,7 +17,7 @@ def _call_gemini(prompt: str) -> str:
     )
 
     return response.text
-"""
+
 def _call_cerebras(prompt: str) -> str:
     response = client.chat.completions.create(
         model="gpt-oss-120b",
@@ -34,6 +36,14 @@ def _call_cerebras(prompt: str) -> str:
     )
 
     return response.choices[0].message.content
+
+def _call_llm(prompt):
+    try:
+        return _call_gemini(prompt)
+
+    except (ResourceExhausted, ServiceUnavailable):
+        print("Gemini quota exceeded or service unavailable. Falling back to Cerebras.")
+        return _call_cerebras(prompt)
 # ─────────────────────────────────────────────────────────────
 # PASS 1 — Overview batch (summary + stats + important emails)
 # Called once per 15-email batch.
@@ -77,7 +87,7 @@ EMAILS:
 
 IF YOU CANNOT SEE ANY EMAILS RETURN THE SAME JSON WITH NULL INSIDE"""
 
-    raw = _call_cerebras(prompt)
+    raw = _call_llm(prompt)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
@@ -141,7 +151,7 @@ EMAILS:
 
 IF YOU CANNOT SEE ANY EMAILS RETURN THE SAME JSON WITH NULL INSIDE"""
 
-    raw = _call_cerebras(prompt)
+    raw = _call_llm(prompt)
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
