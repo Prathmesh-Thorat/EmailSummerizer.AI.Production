@@ -18,7 +18,7 @@ def _call_gemini(prompt: str) -> str:
 """
 def _call_cerebras(prompt: str) -> str:
     response = client.chat.completions.create(
-        model="",
+        model="gpt-oss-120b",
         messages=[
             {
                 "role": "system",
