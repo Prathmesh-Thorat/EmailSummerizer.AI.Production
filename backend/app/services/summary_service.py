@@ -1,6 +1,6 @@
 import json
-from backend.app.ai.gemini_client import client
-from backend.app.ai.cerebrea_client import c_client
+from app.ai.gemini_client import client
+from app.ai.cerebrea_client import c_client
 from google.genai import types
 from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
 
