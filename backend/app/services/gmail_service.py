@@ -71,8 +71,8 @@ def fetch_emails_from_credentials(credentials_json, days=1):
 
     query = f"""
     -category:promotions
+    -category:social
     -is:spam
-    -unsubscribe
     newer_than:{days}d
     """
 

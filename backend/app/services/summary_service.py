@@ -2,7 +2,7 @@ import json
 from app.ai.groq_client import client
 
 
-BATCH_SIZE = 15
+BATCH_SIZE = 20
 
 
 from google.genai import types
