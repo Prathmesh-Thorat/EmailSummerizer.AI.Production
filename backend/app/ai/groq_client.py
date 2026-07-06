@@ -9,6 +9,6 @@ client = genai.Client(
 )
 
 client = OpenAI(
-    api_key=os.getenv("csk-jjp2rnev6dwpfh6yc2xetmfpvf8cfkd3pdkcm89trchk9pny"),
+    api_key=os.getenv("CEREBRAS_API_KEY"),
     base_url="https://api.cerebras.ai/v1"
 )
